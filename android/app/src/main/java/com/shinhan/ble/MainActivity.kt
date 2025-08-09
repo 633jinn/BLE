@@ -601,8 +601,6 @@ class MainActivity : AppCompatActivity() {
             putExtra(AccountSelectionActivity.EXTRA_SELECTED_USER, user)
         }
         startActivity(intent)
-        
-        // TODO: repository를 사용하여 사용자 정보 조회 또는 저장
     }
     
     /**

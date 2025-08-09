@@ -85,8 +85,7 @@ class RealBleScanner @Inject constructor(
             .build()
         
         val filters = ArrayList<NordicScanFilter>()
-        // TODO: Add specific service UUID filters if needed
-        
+
         try {
             // Start real scanning
             scanner.startScan(filters, settings, nordicScanCallback)

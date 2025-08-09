@@ -8,6 +8,7 @@ import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
+import androidx.core.content.edit
 
 /**
  * 신한은행 API 인증 인터셉터
@@ -125,12 +126,12 @@ class AuthInterceptor(private val context: Context) : Interceptor {
     /**
      * 토큰 삭제 (로그아웃)
      */
-    fun clearTokens() {
-        encryptedPrefs.edit()
-            .remove("access_token")
-            .remove("refresh_token")
-            .remove("token_saved_at")
-            .apply()
+    private fun clearTokens() {
+        encryptedPrefs.edit {
+            remove("access_token")
+                .remove("refresh_token")
+                .remove("token_saved_at")
+        }
     }
     
     /**

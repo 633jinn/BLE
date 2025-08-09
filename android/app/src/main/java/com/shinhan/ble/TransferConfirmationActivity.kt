@@ -229,26 +229,11 @@ class TransferConfirmationActivity : AppCompatActivity() {
     }
     
     private fun proceedToSuccess() {
-        // TODO: TransferResultActivity 생성 후 주석 해제
-        /*
         val intent = Intent(this, TransferResultActivity::class.java).apply {
-            putExtra(TransferResultActivity.EXTRA_SELECTED_USER, selectedUser)
-            putExtra(TransferResultActivity.EXTRA_SELECTED_ACCOUNT, selectedAccount)
-            putExtra(TransferResultActivity.EXTRA_TRANSFER_AMOUNT, transferAmountValue)
-            putExtra(TransferResultActivity.EXTRA_TRANSFER_SUCCESS, true)
-        }
-        startActivity(intent)
-        finish()
-        */
-        
-        // 임시로 성공 토스트 메시지 표시
-        Toast.makeText(this, 
-            "이체가 완료되었습니다!\n${numberFormat.format(transferAmountValue)}원", 
-            Toast.LENGTH_LONG).show()
-        
-        // 메인 화면으로 돌아가기
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra(EXTRA_SELECTED_USER, selectedUser)
+            putExtra(EXTRA_SELECTED_ACCOUNT, selectedAccount)
+            putExtra(EXTRA_TRANSFER_AMOUNT, transferAmountValue)
+            putExtra("EXTRA_TRANSFER_SUCCESS", true)
         }
         startActivity(intent)
         finish()
@@ -284,12 +269,12 @@ class TransferConfirmationActivity : AppCompatActivity() {
                 // Android 10 이하
                 @Suppress("DEPRECATION")
                 window.decorView.systemUiVisibility = (
-                    android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN
                 )
             }
             
@@ -302,8 +287,8 @@ class TransferConfirmationActivity : AppCompatActivity() {
             // Fallback to basic fullscreen mode
             @Suppress("DEPRECATION")
             window.decorView.systemUiVisibility = (
-                android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
-                or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             )
         }
     }
@@ -313,7 +298,7 @@ class TransferConfirmationActivity : AppCompatActivity() {
      */
     private fun setupSystemBars() {
         try {
-            val rootView = findViewById<android.view.View>(android.R.id.content)
+            val rootView = findViewById<View>(android.R.id.content)
             rootView?.let { view ->
                 ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
                     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -372,17 +357,9 @@ class TransferConfirmationActivity : AppCompatActivity() {
                         append("받는 사람: ${validation.userName}\n")
                         append("받는 은행: ${validation.bankName}\n")
                         append("송금 금액: ${numberFormat.format(transferAmountValue)}원\n")
-                        append("거래 번호: ${transferResult.transactionId}\n\n")
-                        append("메시지: ${transferResult.message}")
                     }
                     
-                    Toast.makeText(
-                        this@TransferConfirmationActivity,
-                        successMessage,
-                        Toast.LENGTH_LONG
-                    ).show()
-                    
-                    proceedToSuccess()
+                    showSuccessDialog(successMessage)
                 } else {
                     showError("송금 처리에 실패했습니다.\n${transferResult.message}")
                 }
@@ -405,6 +382,17 @@ class TransferConfirmationActivity : AppCompatActivity() {
             .setPositiveButton("확인") { dialog, _ ->
                 dialog.dismiss()
             }
+            .show()
+    }
+
+    private fun showSuccessDialog(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("송금 완료")
+            .setMessage(message)
+            .setPositiveButton("확인") { _, _ ->
+                proceedToSuccess()
+            }
+            .setCancelable(false)
             .show()
     }
     
