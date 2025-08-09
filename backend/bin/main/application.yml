@@ -1,0 +1,42 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: shinhan-ble-backend
+
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/shinhanBLE?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 0902
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # 개발용 설정
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+      
+      
+logging:
+  level:
+    com.shinhan: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    
+# 신한은행 BLE 전용 설정
+shinhan:
+  ble:
+    transfer-code:
+      validity-minutes: 10  # 송금코드 유효시간 (분)
+      max-daily-amount: 10000000  # 일일 송금 한도 (1천만원)
+      max-single-amount: 2000000  # 단일 송금 한도 (200만원)
+    security:
+      jwt:
+        secret: "shinhan-ble-secret-key-2024-very-secure-key-for-jwt-tokens"
+        expiration: 3600000  # 1시간 (밀리초)
+        refresh-expiration: 604800000  # 7일 (밀리초)

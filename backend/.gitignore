@@ -1,0 +1,52 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Gradle
+.gradle/
+build/
+out/
+
+# Keep Gradle wrapper (do not ignore these)
+!gradle/wrapper/gradle-wrapper.jar
+!gradlew
+!gradlew.bat
+
+# Logs
+logs/
+*.log
+
+# Temp
+tmp/
+temp/
+
+# Spring Boot local configs & secrets
+.env
+.env.*
+*.local
+application-local.yml
+application-*.local.yml
+application-secrets.yml
+application-*.secrets.yml
+
+# Certificates / keystores
+*.jks
+*.keystore
+*.pem
+*.p12
+*.key
+
+# Database files (if any local H2, sqlite, etc.)
+*.db
+
+# Reports
+build/reports/
+
+

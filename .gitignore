@@ -1,0 +1,58 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+*.swp
+
+# Gradle
+.gradle/
+**/.gradle/
+**/build/
+**/out/
+
+# Keep Gradle wrapper (do not ignore these)
+!gradle/wrapper/gradle-wrapper.jar
+!gradlew
+!gradlew.bat
+
+# Android Studio / NDK
+local.properties
+**/.externalNativeBuild/
+**/.cxx/
+**/captures/
+**/profileOutput/
+
+# Logs
+*.log
+logs/
+
+# Java/Kotlin
+*.class
+hs_err_pid*
+replay_pid*
+
+# Keystores & secrets
+*.jks
+*.keystore
+*.pem
+*.p12
+*.key
+
+# Env files
+.env
+.env.*
+*.local
+
+# Misc
+node_modules/
+dist/
+tmp/
+temp/
+
+
