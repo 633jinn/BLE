@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 개발 환경에서 HTTP 통신 허용 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- 로컬 개발 서버 -->
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <!-- 실제 개발 서버 IP가 있다면 추가 -->
+        <domain includeSubdomains="true">192.168.219.107</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+    </domain-config>
+    
+    <!-- 운영 환경에서는 HTTPS만 허용 -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">api.shinhan.com</domain>
+        <domain includeSubdomains="true">dev-api.shinhan.com</domain>
+    </domain-config>
+</network-security-config>

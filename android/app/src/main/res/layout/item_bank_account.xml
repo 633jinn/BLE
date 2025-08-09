@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardViewBankAccount"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Bank Name -->
+        <TextView
+            android:id="@+id/textBankName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="국민은행"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Account Type -->
+        <TextView
+            android:id="@+id/textAccountType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="입출금통장"
+            android:textSize="16sp"
+            android:textColor="@color/gray"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Initial Balance -->
+        <TextView
+            android:id="@+id/textInitialBalance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="초기 금액: 1,000,000원"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
