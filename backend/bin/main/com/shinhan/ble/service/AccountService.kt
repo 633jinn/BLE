@@ -33,6 +33,7 @@ class AccountService(
      */
     @Transactional(readOnly = true)
     fun getPrimaryAccount(userId: String): AccountInfoDto? {
+        println(userId)
         return accountRepository.findPrimaryAccountByUserId(userId)
             .map { AccountInfoDto.from(it) }
             .orElse(null)

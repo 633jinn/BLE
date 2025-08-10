@@ -149,14 +149,14 @@ interface ShinhanApiService {
 }
 
 /**
- * API 엔드포인트 상수
+ * API 엔드포인트 상수(context-path: /api/v1 포함)
  */
 object ShinhanApiEndpoints {
-    // 로컬 개발용 백엔드 서버 (context-path: /api/v1 포함)
+    // 로컬 개발용 백엔드 서버
     const val LOCAL_BASE_URL = "http://10.0.2.2:8080/api/v1/" //애뮬레이터용
     
     // 개발 서버
-    const val DEV_BASE_URL = "http://192.168.219.107:8080/api/v1/" //TODO: 본인 와이파이의 ip로 변경 (network_security_config에도 반영)
+    const val DEV_BASE_URL = "http://192.168.219.107:8080/api/v1/" // TODO: 본인 와이파이의 ip로 변경 (network_security_config에도 반영)
     
     // 운영 서버
     const val PROD_BASE_URL = "https://api.shinhan.com/"

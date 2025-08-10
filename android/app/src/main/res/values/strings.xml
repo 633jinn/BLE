@@ -12,19 +12,13 @@
     <string name="unknown_device">Unknown Device</string>
     <string name="rssi_format">RSSI: %d dBm</string>
     
-    <!-- 스캔 실패 메시지 -->
-    <string name="scan_failed">Scan failed: %d</string>
-    
     <!-- Toast 메시지 -->
-    <string name="scanning_started">Scanning started</string>
     <string name="scanning_stopped">Scanning stopped</string>
     <string name="failed_to_start_scan">Failed to start scan: %s</string>
     <string name="failed_to_stop_scan">Failed to stop scan: %s</string>
     
     <!-- 권한 및 블루투스 메시지 -->
     <string name="bluetooth_required">Bluetooth is required for scanning</string>
-    <string name="bluetooth_must_be_enabled">Bluetooth must be enabled for scanning</string>
-    <string name="permissions_required">Permissions required for BLE scanning</string>
     <string name="nearby_users">nearby_users</string>
     <string name="transfer">이체하기</string>
 </resources>

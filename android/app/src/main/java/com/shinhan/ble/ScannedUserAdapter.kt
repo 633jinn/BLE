@@ -36,10 +36,10 @@ class ScannedUserAdapter(
         }
         
         users.clear()
-        android.util.Log.d("ScannedUserAdapter", "Cleared users, size now: ${users.size}")
+//        android.util.Log.d("ScannedUserAdapter", "Cleared users, size now: ${users.size}")
         
         users.addAll(newUsers)
-        android.util.Log.d("ScannedUserAdapter", "Added ${newUsers.size} users, adapter now has ${users.size} users")
+//        android.util.Log.d("ScannedUserAdapter", "Added ${newUsers.size} users, adapter now has ${users.size} users")
         
         // Double check the contents
         for ((index, user) in users.withIndex()) {
