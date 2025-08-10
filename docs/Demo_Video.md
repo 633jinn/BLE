@@ -3,6 +3,10 @@
 ## 프로젝트 데모 영상
 
 
+https://github.com/user-attachments/assets/3bb92dbe-fb73-42e5-b880-cae6f478feca
+
+
+
 
 ## 주요 기능 시연
 
