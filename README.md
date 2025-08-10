@@ -8,6 +8,11 @@
 [![Kotlin](https://img.shields.io/badge/Language-Kotlin-blue.svg)](https://kotlinlang.org)
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg)](https://android-arsenal.com/api?level=21)
 
+## 📚 문서
+
+- [요구사항 명세서](./docs/Requirements_specification.md)
+- [실제 시연 영상](./docs/Demo_Video.md)
+
 ## 📁 프로젝트 구조
 
 ```
@@ -138,6 +143,7 @@ cd android
 ## 🏗️ 시스템 아키텍처
 
 ### 하이브리드 보안 모델
+
 ```
 [안드로이드 앱] ──BLE 스캔/광고──> [신한은행 송금코드 교환]
        ↓                                    ↓
@@ -149,6 +155,7 @@ cd android
 ### 핵심 구성 요소
 
 1. **안드로이드 앱** (`android/`)
+
    - BLE 스캔/광고를 통한 사용자 발견
    - 송금 UI/UX 제공
    - 백엔드 서버와 REST API 통신
@@ -160,39 +167,41 @@ cd android
 
 ## 🔐 보안 구조
 
-| 계층 | 보안 방식 | 보호 대상 |
-|------|-----------|--------------|
-| **BLE 통신** | 디바이스 ID 기반 식별 | 사용자 구분 |
-| **HTTP 통신** | REST API | 서버 통신 |
-| **백엔드 서버** | Spring Security | 인증/인가 |
-| **데이터베이스** | JPA | 사용자 데이터 |
+| 계층             | 보안 방식             | 보호 대상     |
+| ---------------- | --------------------- | ------------- |
+| **BLE 통신**     | 디바이스 ID 기반 식별 | 사용자 구분   |
+| **HTTP 통신**    | REST API              | 서버 통신     |
+| **백엔드 서버**  | Spring Security       | 인증/인가     |
+| **데이터베이스** | JPA                   | 사용자 데이터 |
 
 ## 📱 주요 기능
 
 ### 안드로이드 앱
+
 - **🔍 BLE 스캔**: Nordic Scanner Library 기반 주변 사용자 발견
-   - 실시간 근거리 사용자 검색 및 시각화
-   - ProximityVisualizationView로 거리별 사용자 표시
+  - 실시간 근거리 사용자 검색 및 시각화
+  - ProximityVisualizationView로 거리별 사용자 표시
 - **📡 BLE 광고**: 내 송금코드 브로드캐스트
-   - 디바이스 정보와 송금코드 암호화 전송
+  - 디바이스 정보와 송금코드 암호화 전송
 - **💰 완전한 송금 플로우**:
-   1. **계좌 선택** - 송금할 계좌 선택 (AccountSelectionActivity)
-   2. **사용자 스캔** - BLE로 주변 사용자 검색 (MainActivity)
-   3. **금액 입력** - 직관적인 숫자패드로 금액 입력 (TransferAmountActivity)
-   4. **송금 확인** - 송금 정보 최종 확인 (TransferConfirmationActivity)
-   5. **결과 확인** - 송금 완료 결과 표시 (TransferResultActivity)
+  1.  **계좌 선택** - 송금할 계좌 선택 (AccountSelectionActivity)
+  2.  **사용자 스캔** - BLE로 주변 사용자 검색 (MainActivity)
+  3.  **금액 입력** - 직관적인 숫자패드로 금액 입력 (TransferAmountActivity)
+  4.  **송금 확인** - 송금 정보 최종 확인 (TransferConfirmationActivity)
+  5.  **결과 확인** - 송금 완료 결과 표시 (TransferResultActivity)
 - **🎨 SOL 브랜드 UI**: 신한은행 SOL 페이 디자인 시스템 적용
 - **🏦 계좌 관리**: 신한은행 계좌 조회 및 잔액 확인
 - **🔒 보안**: 디바이스 ID 기반 사용자 식별
 
 ### 백엔드 서버
+
 - **🔐 사용자 인증**: 기본 사용자 인증 시스템
 - **📊 계좌 관리 API**:
-   - 계좌 목록/상세/잔액 조회
-   - 계좌 유효성 검증
+  - 계좌 목록/상세/잔액 조회
+  - 계좌 유효성 검증
 - **🔄 송금 처리**:
-   - BLE 송금코드 생성/검증
-   - 실제 송금 처리 및 상태 관리
+  - BLE 송금코드 생성/검증
+  - 실제 송금 처리 및 상태 관리
 - **📈 내역 관리**: 송금 내역 조회 및 상태 추적
 - **📱 디바이스 관리**: BLE 디바이스 등록 및 관리
 - **🛡️ 보안**: Spring Security 기반 인증/인가
@@ -200,22 +209,24 @@ cd android
 ## 🛠️ 기술 스택
 
 ### 안드로이드 앱
+
 - **언어**: Kotlin
 - **아키텍처**: MVVM + Repository Pattern
 - **UI**: Android View System + SOL 브랜드 디자인 시스템
-   - CardView 기반 모던 UI
-   - Gradient 헤더 및 브랜딩
-   - Material Design 3.0 컴포넌트
+  - CardView 기반 모던 UI
+  - Gradient 헤더 및 브랜딩
+  - Material Design 3.0 컴포넌트
 - **BLE**: Nordic Android Scanner Library
-   - 실시간 스캔 및 광고
-   - Mock/Real 구현체 분리
+  - 실시간 스캔 및 광고
+  - Mock/Real 구현체 분리
 - **네트워킹**: Retrofit + OkHttp
-   - 인증/에러 인터셉터 구현
+  - 인증/에러 인터셉터 구현
 - **DI**: Hilt (Dagger)
 - **시각화**: Custom ProximityVisualizationView
 - **보안**: 디바이스 고유 ID 기반 식별
 
 ### 백엔드 서버
+
 - **언어**: Kotlin
 - **프레임워크**: Spring Boot 3.2
 - **보안**: Spring Security
@@ -223,14 +234,14 @@ cd android
 - **ORM**: JPA + Hibernate
 - **API**: REST API with JSON
 - **아키텍처**:
-   - Controller-Service-Repository 패턴
-   - DTO 기반 데이터 전송
-   - 엔티티 기반 도메인 모델
+  - Controller-Service-Repository 패턴
+  - DTO 기반 데이터 전송
+  - 엔티티 기반 도메인 모델
 
 ## 📋 API 명세
 
-
 ### 사용자 관리
+
 ```
 GET  /api/v1/users                # 사용자 목록 조회
 POST /api/v1/users                # 사용자 생성
@@ -239,6 +250,7 @@ PUT  /api/v1/users/{id}           # 사용자 정보 수정
 ```
 
 ### 계좌 관리
+
 ```
 GET  /api/v1/accounts             # 계좌 목록 조회
 POST /api/v1/accounts             # 계좌 등록
@@ -248,6 +260,7 @@ GET  /api/v1/accounts/{id}/balance # 계좌 잔액 조회
 ```
 
 ### 송금 관리
+
 ```
 POST /api/v1/transfers/validate-code # 송금코드 검증
 POST /api/v1/transfers/execute       # 송금 실행
@@ -257,6 +270,7 @@ POST /api/v1/transfers/generate-code # 송금코드 생성
 ```
 
 ### 디바이스 관리
+
 ```
 GET  /api/v1/devices              # 등록된 디바이스 목록
 POST /api/v1/devices              # 디바이스 등록
@@ -265,6 +279,7 @@ DELETE /api/v1/devices/{id}       # 디바이스 삭제
 ```
 
 ### BLE 송금코드 관리
+
 ```
 POST /api/v1/ble-codes/generate   # BLE 송금코드 생성
 POST /api/v1/ble-codes/validate   # BLE 송금코드 검증
@@ -275,18 +290,34 @@ PUT  /api/v1/ble-codes/{code}     # 송금코드 상태 업데이트
 ## 🔧 개발 환경 설정
 
 ### 요구사항
+
 - **JDK**: 17+
 - **Android Studio**: Arctic Fox+
 - **Kotlin**: 1.9+
 - **MySQL**: 8.0+
 
 ### 환경 변수
+
 ```bash
 # 백엔드 서버
 export SPRING_PROFILES_ACTIVE=dev
 export DB_URL=jdbc:mysql://localhost:3306/shinhan_ble
 export DB_USERNAME=your-username
 export DB_PASSWORD=your-password
+
+# 안드로이드 앱 (개발 서버 URL)
+# 에뮬레이터에서 로컬 백엔드 접속
+export DEV_BASE_URL=http://10.0.2.2:8080/api/v1/
+
+# 실기기에서 로컬 백엔드 접속(adb reverse 필요)
+adb reverse tcp:8080 tcp:8080
+export DEV_BASE_URL=http://127.0.0.1:8080/api/v1/
+
+# 고정 IP로 직접 접속 시(테스트 폰 사용할 때)
+# export DEV_BASE_URL=http://192.168.0.10:8080/api/v1/
+
+# 일시적으로 실행 커맨드에 인라인 지정도 가능
+# DEV_BASE_URL="http://127.0.0.1:8080/api/v1/" ./gradlew :app:installDebug
 ```
 
 ## 📈 확장 가능성
