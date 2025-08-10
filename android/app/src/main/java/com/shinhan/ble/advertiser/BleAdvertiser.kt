@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import com.shinhan.ble.data.ShinhanBLEData
+import com.shinhan.ble.utils.DeviceInfoHelper
 import java.util.*
 
 /**
@@ -105,6 +106,8 @@ class BleAdvertiser(
             }
             
             currentShinhanData = shinhanData
+            // 로컬 이름 보장: 비어있거나 기본값이면 설정에서 가져온 이름으로 세팅
+            ensureBluetoothLocalName()
             Log.d(TAG, "Starting advertising with transfer code: ${shinhanData.transferCode}")
             
             // 광고 설정
@@ -124,7 +127,7 @@ class BleAdvertiser(
             
             // 광고 데이터 구성 (크기 최적화)
             val advertiseData = AdvertiseData.Builder()
-                .setIncludeDeviceName(false)
+                .setIncludeDeviceName(true)
                 .setIncludeTxPowerLevel(false)
                 .addServiceUuid(ParcelUuid(shinhanServiceUuid))
                 // 일부 단말 호환성: serviceData가 큰 경우 UUID만 싣고 scanResponse에 나머지 배분
@@ -281,5 +284,20 @@ class BleAdvertiser(
     
     companion object {
         private const val TAG = "BleAdvertiser"
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun ensureBluetoothLocalName() {
+        try {
+            val current = bluetoothAdapter.name
+            if (current.isNullOrBlank() || current.startsWith("Device") || current.startsWith("디바이스")) {
+                val desired = DeviceInfoHelper.getBluetoothLocalName(context)
+                // 이름 설정은 일부 기기에서 제한될 수 있음. 권한 필요(ADB, 시스템 정책 등).
+                bluetoothAdapter.name = desired
+                Log.d(TAG, "Bluetooth local name set to: $desired (was: $current)")
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to ensure bluetooth local name: ${e.message}")
+        }
     }
 }

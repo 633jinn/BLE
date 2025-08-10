@@ -36,7 +36,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SOL 페이"
+                    android:text="Shinhan"
                     android:textSize="12sp"
                     android:textColor="#B3FFFFFF"
                     android:fontFamily="sans-serif-medium" />
@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BLE Scanner"
+                    android:text="BLE Transfer"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/white"

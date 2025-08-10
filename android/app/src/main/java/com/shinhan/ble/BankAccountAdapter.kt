@@ -1,17 +1,15 @@
 package com.shinhan.ble
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.shinhan.ble.data.network.dto.AccountDto
 
 class BankAccountAdapter(
-    private val bankAccounts: List<AccountDto>,
-    private val onAccountClick: (AccountDto) -> Unit
+    private val bankAccounts: List<BankAccount>,
+    private val onAccountClick: (BankAccount) -> Unit
 ) : RecyclerView.Adapter<BankAccountAdapter.BankAccountViewHolder>() {
     
     inner class BankAccountViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -20,7 +18,7 @@ class BankAccountAdapter(
         private val textAccountType: TextView = itemView.findViewById(R.id.textAccountType)
         private val textInitialBalance: TextView = itemView.findViewById(R.id.textInitialBalance)
         
-        fun bind(bankAccount: AccountDto) {
+        fun bind(bankAccount: BankAccount) {
             textBankName.text = bankAccount.bankName
             textAccountType.text = bankAccount.accountType
             textInitialBalance.text = "초기 금액: ${String.format("%,d", bankAccount.balance)}원"

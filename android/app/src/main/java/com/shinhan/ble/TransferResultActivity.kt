@@ -35,7 +35,7 @@ class TransferResultActivity : AppCompatActivity() {
 
         // Header
         titleText.text = if (success) "송금 완료" else "송금 실패"
-        statusIcon.setImageResource(if (success) R.drawable.ic_signal_strength else R.drawable.ic_warning)
+        statusIcon.setImageResource(if (success) R.drawable.ic_verified else R.drawable.ic_shield)
 
         amountText.text = numberFormat.format(amount)
         fromAccountText.text = account?.let { "${it.bankName} ${formatAccountNumber(it.accountNumber)}" } ?: "-"
@@ -62,5 +62,3 @@ class TransferResultActivity : AppCompatActivity() {
         }
     }
 }
-
-

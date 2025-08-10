@@ -19,57 +19,17 @@ class BleTransferRepository @Inject constructor(
      * 대표 계좌 조회
      */
     suspend fun getPrimaryAccount(userId: String) = apiRepository.getPrimaryAccount(userId)
-    
-    /**
-     * 계좌 정보 조회
-     */
-    suspend fun getAccountInfo(accountId: String) = apiRepository.getAccountInfo(accountId)
-    
-    /**
-     * 계좌 잔액 조회
-     */
-    suspend fun getAccountBalance(accountId: String, userId: String) = apiRepository.getAccountBalance(accountId, userId)
-    
-    /**
-     * BLE 송금 처리
-     */
-    suspend fun processBleTransfer(bleTransferRequest: BleTransferRequestDto, userId: String) = apiRepository.processBleTransfer(bleTransferRequest, userId)
-    
-    /**
-     * BLE 송금코드 생성
-     */
-    suspend fun generateTransferCode(codeGenerationDto: BleTransferCodeGenerationDto) = apiRepository.generateTransferCode(codeGenerationDto)
-    
+
     /**
      * 대표 계좌 설정
      */
     suspend fun setPrimaryAccount(userId: String, accountId: String) = apiRepository.setPrimaryAccount(userId, accountId)
-    
+
     /**
-     * BLE 송금코드 검증
+     * BLE 송금코드 생성
      */
-    suspend fun validateTransferCode(transferCode: String) = apiRepository.validateTransferCode(transferCode)
-    
-    /**
-     * 활성 BLE 송금코드 조회
-     */
-    suspend fun getActiveTransferCode(userId: String) = apiRepository.getActiveTransferCode(userId)
-    
-    /**
-     * 송금 내역 조회
-     */
-    suspend fun getTransferHistory(userId: String, page: Int = 0, size: Int = 20) = apiRepository.getTransferHistory(userId, page, size)
-    
-    /**
-     * BLE 송금 내역 조회
-     */
-    suspend fun getBleTransferHistory(userId: String, page: Int = 0, size: Int = 20) = apiRepository.getBleTransferHistory(userId, page, size)
-    
-    /**
-     * 거래 상세 조회
-     */
-    suspend fun getTransferDetail(transactionId: String) = apiRepository.getTransferDetail(transactionId)
-    
+    suspend fun generateTransferCode(codeGenerationDto: BleTransferCodeGenerationDto) = apiRepository.generateTransferCode(codeGenerationDto)
+
     /**
      * 새 계좌 생성
      */

@@ -46,7 +46,7 @@ class AccountAdapter(
         holder.accountBalance.text = "잔액 ${numberFormat.format(account.balance)}원"
 
         // 선택 상태 표시 (대표 계좌면 초기 선택 상태로도 표시)
-        holder.selectionRadio.isChecked = (account.accountId == selectedAccountId) || account.isPrimary && selectedAccountId == null
+        holder.selectionRadio.isChecked = (account.accountId == selectedAccountId) || (account.isPrimary && selectedAccountId == null)
 
         // 계좌 선택 처리
         holder.itemView.setOnClickListener {

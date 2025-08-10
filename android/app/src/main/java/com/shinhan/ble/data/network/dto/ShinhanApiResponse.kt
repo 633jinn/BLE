@@ -71,6 +71,34 @@ data class AccountDto(
 ) : Parcelable
 
 /**
+ * 가상 계좌 추가
+ */
+@Parcelize
+data class AdditionalAccountDto(
+    @SerializedName("accountId")
+    val accountId: String,
+
+    @SerializedName("accountNumber")
+    val accountNumber: String,
+
+    @SerializedName("accountType")
+    val accountType: String,
+
+    @SerializedName("bankName")
+    val bankName: String,
+
+    @SerializedName("bankCode")
+    val bankCode: String,
+
+    @SerializedName("balance")
+    val balance: Long,
+
+    @SerializedName("currency")
+    val currency: String = "KRW",
+) : Parcelable
+
+
+/**
  * BLE 송금 요청 DTO
  */
 data class BleTransferRequestDto(
@@ -382,13 +410,13 @@ data class DeviceInfoDto(
 data class AccountCreateRequestDto(
     @SerializedName("userId")
     val userId: String,
-    
+
     @SerializedName("accountType")
     val accountType: String, // 예: "입출금통장", "적금", "예금"
-    
+
     @SerializedName("bankCode")
     val bankCode: String = "088", // 신한은행 고정
-    
+
     @SerializedName("initialBalance")
     val initialBalance: Long = 0L
 )

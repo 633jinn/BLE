@@ -18,6 +18,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // DEV_BASE_URL을 환경변수로 주입 (없으면 기본값 사용)
+        val envBaseUrl = System.getenv("DEV_BASE_URL") ?: "http://192.168.219.107:8080/api/v1/"
+        buildConfigField("String", "DEV_BASE_URL", "\"$envBaseUrl\"")
     }
 
     buildTypes {

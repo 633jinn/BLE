@@ -2,6 +2,8 @@ package com.shinhan.ble.di
 
 import android.content.Context
 import com.google.gson.Gson
+import android.os.Build
+import com.shinhan.ble.BuildConfig
 import com.google.gson.GsonBuilder
 import com.shinhan.ble.data.network.api.ShinhanApiEndpoints
 import com.shinhan.ble.data.network.api.ShinhanApiService
@@ -99,14 +101,25 @@ object NetworkModule {
         okHttpClient: OkHttpClient,
         gson: Gson
     ): Retrofit {
-        // 개발 단계에서는 로컬 백엔드 서버 사용
-        val baseUrl = ShinhanApiEndpoints.DEV_BASE_URL//LOCAL_BASE_URL
+        val baseUrl = BuildConfig.DEV_BASE_URL
         
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
+    }
+
+    private fun isEmulator(): Boolean {
+        val fp = Build.FINGERPRINT
+        val model = Build.MODEL
+        val brand = Build.BRAND
+        val device = Build.DEVICE
+        val product = Build.PRODUCT
+        return fp.startsWith("generic") || fp.lowercase().contains("vbox") ||
+                fp.lowercase().contains("test-keys") || model.contains("Emulator") ||
+                model.contains("Android SDK built for x86") || (brand.startsWith("generic") && device.startsWith("generic")) ||
+                product == "google_sdk"
     }
     
     /**
