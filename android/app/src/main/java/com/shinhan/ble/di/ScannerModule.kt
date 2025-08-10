@@ -1,7 +1,6 @@
 package com.shinhan.ble.di
 
 import com.shinhan.ble.scanner.BleScanner
-import com.shinhan.ble.scanner.MockBleScanner
 import com.shinhan.ble.scanner.RealBleScanner
 import dagger.Binds
 import dagger.Module

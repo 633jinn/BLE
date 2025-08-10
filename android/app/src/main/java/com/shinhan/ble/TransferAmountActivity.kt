@@ -23,7 +23,7 @@ import java.util.*
  */
 @AndroidEntryPoint
 class TransferAmountActivity : AppCompatActivity() {
-    
+
     private lateinit var backButton: ImageButton
     private lateinit var fromAccountInfo: TextView
     private lateinit var fromAccountBalance: TextView
@@ -37,49 +37,47 @@ class TransferAmountActivity : AppCompatActivity() {
     private lateinit var amount100000: Button
     private lateinit var clearButton: Button
     private lateinit var confirmButton: Button
-    private lateinit var numberPadContainer: GridLayout
-    
+    private lateinit var numberPadContainer: androidx.cardview.widget.CardView
+
     private var selectedUser: ScannedUser? = null
     private var selectedAccount: AccountDto? = null
     private var currentAmount: Long = 0L
     private val numberFormat = NumberFormat.getNumberInstance(Locale.KOREA)
-    
-    // 숫자 패드 버튼들
-    private val numberButtons = mutableListOf<Button>()
-    
+
+
     companion object {
         const val EXTRA_SELECTED_USER = "extra_selected_user"
         const val EXTRA_SELECTED_ACCOUNT = "extra_selected_account"
         const val EXTRA_TRANSFER_AMOUNT = "extra_transfer_amount"
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContentView(R.layout.activity_transfer_amount)
-        
+
         // Enable immersive mode after content view is set
         enableImmersiveMode()
-        
+
         // Handle system bars for immersive mode
         setupSystemBars()
-        
+
         // Intent에서 데이터 가져오기
         selectedUser = intent.getParcelableExtra(EXTRA_SELECTED_USER)
         selectedAccount = intent.getParcelableExtra(EXTRA_SELECTED_ACCOUNT)
-        
+
         if (selectedUser == null || selectedAccount == null) {
             finish()
             return
         }
-        
+
         initializeViews()
         setupTransferInfo()
         setupNumberPad()
         setupClickListeners()
         updateAmountDisplay()
     }
-    
+
     private fun initializeViews() {
         backButton = findViewById(R.id.backButton)
         fromAccountInfo = findViewById(R.id.fromAccountInfo)
@@ -96,17 +94,17 @@ class TransferAmountActivity : AppCompatActivity() {
         confirmButton = findViewById(R.id.confirmButton)
         numberPadContainer = findViewById(R.id.numberPadContainer)
     }
-    
+
     private fun setupTransferInfo() {
         selectedAccount?.let { account ->
             fromAccountInfo.text = "${account.bankName} ${formatAccountNumber(account.accountNumber)}"
             fromAccountBalance.text = "잔액 ${numberFormat.format(account.balance)}원"
         }
-        
+
         selectedUser?.let { user ->
             toUserName.text = user.deviceName
             toUserDevice.text = user.deviceAddress
-            
+
             // 사용자 색상 표시
             val colorDrawable = GradientDrawable().apply {
                 shape = GradientDrawable.OVAL
@@ -115,61 +113,58 @@ class TransferAmountActivity : AppCompatActivity() {
             toUserColorIndicator.background = colorDrawable
         }
     }
-    
+
     private fun setupNumberPad() {
-        // 숫자 패드 버튼 생성 (1-9, 0, 백스페이스)
-        val numbers = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "⌫")
-        
-        for (i in numbers.indices) {
-            val button = Button(this).apply {
-                text = numbers[i]
-                setBackgroundResource(R.drawable.number_pad_button)
-                textSize = 20f
-                setTextColor(ContextCompat.getColor(this@TransferAmountActivity, R.color.black))
-                
-                // GridLayout 파라미터 설정
-                layoutParams = GridLayout.LayoutParams().apply {
-                    width = 0
-                    height = 192  // 64dp * 3
-                    columnSpec = GridLayout.spec(i % 3, 1f)
-                    rowSpec = GridLayout.spec(i / 3)
-                    setMargins(12, 12, 12, 12)
-                }
-                
-                setOnClickListener { onNumberPadClick(numbers[i]) }
-            }
-            
-            numberButtons.add(button)
-            numberPadContainer.addView(button)
-        }
+        // Number pad buttons are already defined in the layout
+        // Set click listeners for existing buttons
+        findViewById<Button>(R.id.btn1).setOnClickListener { onNumberPadClick("1") }
+        findViewById<Button>(R.id.btn2).setOnClickListener { onNumberPadClick("2") }
+        findViewById<Button>(R.id.btn3).setOnClickListener { onNumberPadClick("3") }
+        findViewById<Button>(R.id.btn4).setOnClickListener { onNumberPadClick("4") }
+        findViewById<Button>(R.id.btn5).setOnClickListener { onNumberPadClick("5") }
+        findViewById<Button>(R.id.btn6).setOnClickListener { onNumberPadClick("6") }
+        findViewById<Button>(R.id.btn7).setOnClickListener { onNumberPadClick("7") }
+        findViewById<Button>(R.id.btn8).setOnClickListener { onNumberPadClick("8") }
+        findViewById<Button>(R.id.btn9).setOnClickListener { onNumberPadClick("9") }
+        findViewById<Button>(R.id.btn0).setOnClickListener { onNumberPadClick("0") }
+        findViewById<Button>(R.id.btn00).setOnClickListener { onNumberPadClick("00") }
+        findViewById<Button>(R.id.btnDelete).setOnClickListener { onNumberPadClick("⌫") }
     }
-    
+
     private fun setupClickListeners() {
         backButton.setOnClickListener {
             finish()
         }
-        
+
         // 빠른 금액 버튼들
         amount10000.setOnClickListener { addAmount(10000) }
         amount50000.setOnClickListener { addAmount(50000) }
         amount100000.setOnClickListener { addAmount(100000) }
-        
+
         clearButton.setOnClickListener {
             currentAmount = 0L
             updateAmountDisplay()
         }
-        
+
         confirmButton.setOnClickListener {
             proceedToConfirmation()
         }
     }
-    
+
     private fun onNumberPadClick(input: String) {
         when (input) {
             "⌫" -> {
                 // 백스페이스 - 마지막 자리 삭제
                 if (currentAmount > 0) {
                     currentAmount /= 10
+                    updateAmountDisplay()
+                }
+            }
+            "00" -> {
+                // 00 입력 - 현재 금액에 100을 곱함
+                val newAmount = currentAmount * 100
+                if (newAmount <= 1_000_000_000L) {
+                    currentAmount = newAmount
                     updateAmountDisplay()
                 }
             }
@@ -187,7 +182,7 @@ class TransferAmountActivity : AppCompatActivity() {
             }
         }
     }
-    
+
     private fun addAmount(amount: Long) {
         val newAmount = currentAmount + amount
         // 최대 10억원으로 제한
@@ -196,7 +191,7 @@ class TransferAmountActivity : AppCompatActivity() {
             updateAmountDisplay()
         }
     }
-    
+
     private fun updateAmountDisplay() {
         if (currentAmount == 0L) {
             amountDisplay.text = "0"
@@ -204,7 +199,7 @@ class TransferAmountActivity : AppCompatActivity() {
         } else {
             amountDisplay.text = numberFormat.format(currentAmount)
             confirmButton.isEnabled = true
-            
+
             // 잔액 부족 체크
             selectedAccount?.let { account ->
                 if (currentAmount > account.balance) {
@@ -217,7 +212,7 @@ class TransferAmountActivity : AppCompatActivity() {
             }
         }
     }
-    
+
     private fun proceedToConfirmation() {
         if (currentAmount > 0L) {
             selectedAccount?.let { account ->
@@ -232,7 +227,7 @@ class TransferAmountActivity : AppCompatActivity() {
             }
         }
     }
-    
+
     /**
      * 계좌번호 포맷팅 (예: 110123456789 -> 110-123-456789)
      */
@@ -247,7 +242,7 @@ class TransferAmountActivity : AppCompatActivity() {
             else -> accountNumber
         }
     }
-    
+
     /**
      * Immersive Mode 활성화
      */
@@ -263,30 +258,30 @@ class TransferAmountActivity : AppCompatActivity() {
                 // Android 10 이하
                 @Suppress("DEPRECATION")
                 window.decorView.systemUiVisibility = (
-                    android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
-                )
+                        android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+                        )
             }
-            
+
             // Status bar와 navigation bar를 투명하게 설정
             window.statusBarColor = android.graphics.Color.TRANSPARENT
             window.navigationBarColor = android.graphics.Color.TRANSPARENT
-            
+
         } catch (e: Exception) {
             Log.e("TransferAmountActivity", "Failed to enable immersive mode: ${e.message}")
             // Fallback to basic fullscreen mode
             @Suppress("DEPRECATION")
             window.decorView.systemUiVisibility = (
-                android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
-                or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            )
+                    android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+                            or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    )
         }
     }
-    
+
     /**
      * 시스템 바 처리 설정
      */
@@ -296,7 +291,7 @@ class TransferAmountActivity : AppCompatActivity() {
             rootView?.let { view ->
                 ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
                     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                    
+
                     // 상태바와 네비게이션 바 영역까지 컨텐츠가 확장되도록 패딩 조정
                     v.setPadding(
                         systemBars.left,
@@ -311,7 +306,7 @@ class TransferAmountActivity : AppCompatActivity() {
             Log.e("TransferAmountActivity", "Failed to setup system bars: ${e.message}")
         }
     }
-    
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {

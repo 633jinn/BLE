@@ -9,4 +9,10 @@
     <color name="primary_color">#0046FF</color>
     <color name="primary_blue">#0046FF</color>
     <color name="gray_light">#DDDDDD</color>
+
+    <!-- SOL (Shinhan) accent palette -->
+    <color name="sol_blue_start">#0046FF</color>
+    <color name="sol_blue_end">#5B8CFF</color>
+    <color name="sol_blue_surface">#F3F6FF</color>
+    <color name="sol_blue_stroke">#E0E8FF</color>
 </resources>

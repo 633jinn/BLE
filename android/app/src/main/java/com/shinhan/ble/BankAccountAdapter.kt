@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.shinhan.ble.data.network.dto.AccountDto
 
 class BankAccountAdapter(
-    private val bankAccounts: List<BankAccount>,
-    private val onAccountClick: (BankAccount) -> Unit
+    private val bankAccounts: List<AccountDto>,
+    private val onAccountClick: (AccountDto) -> Unit
 ) : RecyclerView.Adapter<BankAccountAdapter.BankAccountViewHolder>() {
     
     inner class BankAccountViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -19,19 +20,19 @@ class BankAccountAdapter(
         private val textAccountType: TextView = itemView.findViewById(R.id.textAccountType)
         private val textInitialBalance: TextView = itemView.findViewById(R.id.textInitialBalance)
         
-        fun bind(bankAccount: BankAccount) {
+        fun bind(bankAccount: AccountDto) {
             textBankName.text = bankAccount.bankName
             textAccountType.text = bankAccount.accountType
-            textInitialBalance.text = "초기 금액: ${String.format("%,d", bankAccount.initialBalance)}원"
+            textInitialBalance.text = "초기 금액: ${String.format("%,d", bankAccount.balance)}원"
             
-            // Set background color
-            try {
-                cardView.setCardBackgroundColor(Color.parseColor(bankAccount.backgroundColor))
-            } catch (e: IllegalArgumentException) {
-                // Fallback to default color if parsing fails
-                cardView.setCardBackgroundColor(Color.parseColor("#F5F5F5"))
-            }
-            
+//            // Set background color
+//            try {
+//                cardView.setCardBackgroundColor(Color.parseColor(bankAccount.))
+//            } catch (e: IllegalArgumentException) {
+//                // Fallback to default color if parsing fails
+//                cardView.setCardBackgroundColor(Color.parseColor("#F5F5F5"))
+//            }
+//
             // Set click listener
             cardView.setOnClickListener {
                 onAccountClick(bankAccount)

@@ -26,7 +26,7 @@ class AccountAdditionActivity : AppCompatActivity() {
     // UI Views
     private lateinit var recyclerViewAccounts: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var accountAdapter: BankAccountAdapter
+    private lateinit var accountAdapter: AccountAdapter
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +42,11 @@ class AccountAdditionActivity : AppCompatActivity() {
     }
     
     private fun setupRecyclerView() {
-        accountAdapter = BankAccountAdapter(getMockBankAccounts()) { bankAccount ->
-            createAccount(bankAccount)
-        }
-        recyclerViewAccounts.layoutManager = LinearLayoutManager(this)
-        recyclerViewAccounts.adapter = accountAdapter
+//        accountAdapter = AccountAdapter(getMockBankAccounts()) { bankAccount ->
+//            createAccount(bankAccount)
+//        }
+//        recyclerViewAccounts.layoutManager = LinearLayoutManager(this)
+//        recyclerViewAccounts.adapter = accountAdapter
     }
     
     private fun getMockBankAccounts(): List<BankAccount> {

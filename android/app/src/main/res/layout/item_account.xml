@@ -4,91 +4,201 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    android:backgroundTint="#FFFFFF"
     android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <!-- Bank Icon -->
-        <ImageView
-            android:id="@+id/bankIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="12dp"
-            android:src="@drawable/ic_bank"
-            android:background="@drawable/circle_background_light"
-            android:padding="8dp" />
-
-        <!-- Account Info -->
+        <!-- Bank Header -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp"
+            android:padding="8dp"
+            android:background="#E3F2FD">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_bank"
+                android:layout_marginEnd="6dp"
+                app:tint="#1976D2" />
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:layout_weight="1"
+                android:text="신한은행 계좌"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="#1976D2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="활성"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#4CAF50"
+                android:background="#E8F5E8"
+                android:padding="4dp" />
+
+        </LinearLayout>
+
+        <!-- Account Main Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <!-- Enhanced Bank Icon -->
+            <ImageView
+                android:id="@+id/bankIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_bank"
+                android:background="@drawable/circle_background"
+                android:backgroundTint="#1976D2"
+                android:padding="12dp"
+                android:elevation="2dp"
+                app:tint="@color/white" />
+
+            <!-- Account Details -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
+
+                    <TextView
+                        android:id="@+id/bankName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="신한은행"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+
+                    <TextView
+                        android:id="@+id/accountType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="입출금통장"
+                        android:textSize="11sp"
+                        android:textColor="#1976D2"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp"
+                        android:background="#E3F2FD"
+                        android:padding="4dp" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/bankName"
+                    android:id="@+id/accountNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="신한은행"
-                    android:textSize="16sp"
+                    android:text="110-123-456789"
+                    android:textSize="14sp"
+                    android:textColor="#757575"
+                    android:fontFamily="monospace"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/accountBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="잔액 1,234,567원"
+                    android:textSize="15sp"
+                    android:textColor="#4CAF50"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/accountType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="입출금통장"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/rounded_background_gray"
+                    android:background="#E8F5E8"
                     android:padding="4dp" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/accountNumber"
+            <!-- Enhanced Selection Indicator -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="110-123-456789"
-                android:textSize="14sp"
-                android:textColor="@color/gray"
-                android:layout_marginTop="4dp" />
+                android:orientation="vertical"
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/accountBalance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="잔액 1,234,567원"
-                android:textSize="14sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginTop="4dp" />
+                <RadioButton
+                    android:id="@+id/selectionRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:buttonTint="#1976D2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="선택"
+                    android:textSize="9sp"
+                    android:textColor="#757575" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Selection Indicator -->
-        <RadioButton
-            android:id="@+id/selectionRadio"
-            android:layout_width="wrap_content"
+        <!-- Security Footer -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:background="#F8F9FA">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_shield"
+                android:layout_marginEnd="4dp"
+                app:tint="#4CAF50" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="신한은행 공인 보안 연결"
+                android:textSize="10sp"
+                android:textColor="#4CAF50"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AES-256"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="#FF6F00"
+                android:background="#FFF3E0"
+                android:padding="2dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

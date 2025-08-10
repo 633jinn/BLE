@@ -5,294 +5,657 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white"
+    android:background="#F8F9FA"
     tools:context=".TransferAmountActivity">
 
-    <!-- Header -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="24dp">
-
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_arrow_back"
-            android:contentDescription="뒤로가기" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="이체 금액"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:gravity="center" />
-
-        <View
-            android:layout_width="48dp"
-            android:layout_height="48dp" />
-
-    </LinearLayout>
-
-    <!-- Transfer Info Card -->
+    <!-- Enhanced Header with SOL Branding -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp">
+        android:layout_height="80dp"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
+        android:background="@drawable/sol_header_gradient">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/sol_header_gradient">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="뒤로가기"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOL 페이"
+                    android:textSize="12sp"
+                    android:textColor="#B3FFFFFF"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="송금하기"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <!-- Security Badge -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_security"
+                android:background="@drawable/circle_white_background"
+                app:tint="#4CAF50" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <!-- From Account -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="보내는 계좌"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
-                android:layout_marginBottom="8dp" />
-
-            <LinearLayout
+            <!-- Enhanced Transfer Info Card -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp">
-
-                <ImageView
-                    android:id="@+id/fromBankIcon"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_bank" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                android:backgroundTint="#FFFFFF">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
+                    <!-- From Account -->
                     <TextView
-                        android:id="@+id/fromAccountInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="신한은행 110-123-456789"
-                        android:textSize="14sp"
+                        android:text="보내는 계좌"
+                        android:textSize="13sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black" />
+                        android:textColor="#424242"
+                        android:layout_marginBottom="12dp" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="20dp"
+                        android:padding="12dp"
+                        android:background="#F5F5F5"
+                        android:elevation="2dp">
+
+                        <ImageView
+                            android:id="@+id/fromBankIcon"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_bank"
+                            android:background="@drawable/circle_background"
+                            android:padding="8dp"
+                            app:tint="#1976D2" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/fromAccountInfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="신한은행 110-123-456789"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:textColor="#212121" />
+
+                            <TextView
+                                android:id="@+id/fromAccountBalance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="잔액 1,234,567원"
+                                android:textSize="13sp"
+                                android:textColor="#757575"
+                                android:layout_marginTop="2dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Modern Transfer Arrow -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginVertical="8dp">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="2dp"
+                            android:layout_weight="1"
+                            android:background="#E0E0E0" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:background="@drawable/circle_background"
+                            android:backgroundTint="#1976D2"
+                            android:padding="8dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/ic_arrow_down"
+                                app:tint="#FFFFFF" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="2dp"
+                            android:layout_weight="1"
+                            android:background="#E0E0E0" />
+
+                    </LinearLayout>
+
+                    <!-- To User -->
                     <TextView
-                        android:id="@+id/fromAccountBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="잔액 1,234,567원"
-                        android:textSize="12sp"
-                        android:textColor="@color/gray" />
+                        android:text="받는 분"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="12dp"
+                        android:background="#F5F5F5"
+                        android:elevation="2dp">
+
+                        <View
+                            android:id="@+id/toUserColorIndicator"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/circle_background"
+                            android:elevation="2dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/toUserName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="사용자 이름"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:textColor="#212121" />
+
+                            <TextView
+                                android:id="@+id/toUserDevice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="BLE Device • 보안 연결됨"
+                                android:textSize="13sp"
+                                android:textColor="#757575"
+                                android:layout_marginTop="2dp" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_verified"
+                            app:tint="#4CAF50" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <!-- Arrow -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"
-                android:layout_marginBottom="8dp" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_arrow_down"
-                android:layout_marginBottom="8dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"
-                android:layout_marginBottom="16dp" />
-
-            <!-- To User -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="받는 분"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
-                android:layout_marginBottom="8dp" />
-
-            <LinearLayout
+            <!-- Enhanced Amount Input Section -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <View
-                    android:id="@+id/toUserColorIndicator"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/circle_background" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:backgroundTint="#FFFFFF">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                    <TextView
-                        android:id="@+id/toUserName"
-                        android:layout_width="wrap_content"
+                    <!-- Section Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="사용자 이름"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="20dp">
 
-                    <TextView
-                        android:id="@+id/toUserDevice"
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_money"
+                            android:layout_marginEnd="8dp"
+                            app:tint="#1976D2" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="송금할 금액을 입력하세요"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#424242" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="KRW"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#757575"
+                            android:background="#F0F0F0"
+                            android:padding="6dp" />
+
+                    </LinearLayout>
+
+                    <!-- Amount Display -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="디바이스 주소"
-                        android:textSize="12sp"
-                        android:textColor="@color/gray" />
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginBottom="24dp"
+                        android:padding="16dp"
+                        android:background="#F8F9FA">
+
+                        <TextView
+                            android:id="@+id/amountDisplay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="42sp"
+                            android:textStyle="bold"
+                            android:textColor="#1976D2"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="원"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            android:textColor="#424242"
+                            android:layout_marginStart="8dp" />
+
+                    </LinearLayout>
+
+                    <!-- Quick Amount Buttons -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <Button
+                            android:id="@+id/amount10000"
+                            style="@style/QuickAmountButton"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:text="1만원"
+                            android:background="@drawable/rounded_button_outline"
+                            android:textColor="#1976D2"
+                            android:textStyle="bold"
+                            android:elevation="2dp" />
+
+                        <Button
+                            android:id="@+id/amount50000"
+                            style="@style/QuickAmountButton"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:text="5만원"
+                            android:background="@drawable/rounded_button_outline"
+                            android:textColor="#1976D2"
+                            android:textStyle="bold"
+                            android:elevation="2dp" />
+
+                        <Button
+                            android:id="@+id/amount100000"
+                            style="@style/QuickAmountButton"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            android:text="10만원"
+                            android:background="@drawable/rounded_button_outline"
+                            android:textColor="#1976D2"
+                            android:textStyle="bold"
+                            android:elevation="2dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Calculator Number Pad -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:id="@+id/numberPadContainer"
+                android:backgroundTint="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Number Pad Grid -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Row 1: 1, 2, 3 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                            <Button
+                                android:id="@+id/btn1"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="1"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                            <Button
+                                android:id="@+id/btn2"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="2"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#55F8F9FA" />
+
+                            <Button
+                                android:id="@+id/btn3"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:text="3"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                        </LinearLayout>
+
+                        <!-- Row 2: 4, 5, 6 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                            <Button
+                                android:id="@+id/btn4"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="4"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                            <Button
+                                android:id="@+id/btn5"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="5"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                            <Button
+                                android:id="@+id/btn6"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:text="6"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                        </LinearLayout>
+
+                        <!-- Row 3: 7, 8, 9 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                            <Button
+                                android:id="@+id/btn7"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="7"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                            <Button
+                                android:id="@+id/btn8"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="8"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                            <Button
+                                android:id="@+id/btn9"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:text="9"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                        </LinearLayout>
+
+                        <!-- Row 4: 00, 0, Del -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btn00"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="00"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                            <Button
+                                android:id="@+id/btn0"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:layout_marginEnd="8dp"
+                                android:text="0"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#424242"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#F8F9FA" />
+
+                            <Button
+                                android:id="@+id/btnDelete"
+                                android:layout_width="0dp"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:text="←"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#FF5722"
+                                android:background="@drawable/rounded_button_outline"
+                                android:backgroundTint="#FFF3E0" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 
-    <!-- Amount Input Section -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이체 금액"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Amount Display -->
+    <!-- Enhanced Bottom Actions -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="24dp">
-
-        <TextView
-            android:id="@+id/amountDisplay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary_color"
-            android:fontFamily="monospace" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="원"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="8dp" />
-
-    </LinearLayout>
-
-    <!-- Quick Amount Buttons -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="24dp">
-
-        <Button
-            android:id="@+id/amount10000"
-            style="@style/QuickAmountButton"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="1만원" />
-
-        <Button
-            android:id="@+id/amount50000"
-            style="@style/QuickAmountButton"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="5만원" />
-
-        <Button
-            android:id="@+id/amount100000"
-            style="@style/QuickAmountButton"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="10만원" />
-
-    </LinearLayout>
-
-    <!-- Number Pad -->
-    <GridLayout
-        android:id="@+id/numberPadContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:columnCount="3"
-        android:rowCount="4"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp">
-
-        <!-- Number buttons will be added programmatically for better control -->
-
-    </GridLayout>
-
-    <!-- Bottom Actions -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
         <Button
             android:id="@+id/clearButton"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="64dp"
             android:layout_weight="1"
-            android:text="전체삭제"
+            android:text="Clear"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:background="@drawable/rounded_button_outline"
-            android:textColor="@color/primary_color"
-            android:layout_marginEnd="8dp" />
+            android:textColor="#757575"
+            android:layout_marginEnd="12dp"
+            android:elevation="2dp" />
 
         <Button
             android:id="@+id/confirmButton"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="64dp"
             android:layout_weight="2"
-            android:text="확인"
+            android:text="BLE 송금 실행"
             android:textSize="16sp"
             android:textStyle="bold"
             android:background="@drawable/rounded_button"
+            android:backgroundTint="#1976D2"
             android:textColor="@color/white"
-            android:enabled="false" />
+            android:enabled="false"
+            android:elevation="4dp"
+            android:drawableStart="@drawable/ic_bluetooth"
+            android:drawableTint="@color/white"
+            android:drawablePadding="8dp" />
 
     </LinearLayout>
 

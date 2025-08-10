@@ -1,70 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:background="#F8F9FA"
+    tools:context=".TransferResultActivity">
 
-    <ImageView
-        android:id="@+id/resultStatusIcon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:contentDescription="status"
-        android:tint="@color/primary_blue"
-        android:src="@drawable/ic_signal_strength" />
+    <!-- Enhanced Header with SOL Branding -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
+        android:background="@drawable/sol_header_gradient">
 
-    <TextView
-        android:id="@+id/resultTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_gravity="center_horizontal"
-        android:text="송금 완료"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/sol_header_gradient">
 
-    <TextView
-        android:id="@+id/resultAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_gravity="center_horizontal"
-        android:text="0"
-        android:textSize="28sp"
-        android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
 
-    <TextView
-        android:id="@+id/resultFromAccount"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOL 페이"
+                    android:textSize="12sp"
+                    android:textColor="#B3FFFFFF"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="송금 완료"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <!-- Success Badge -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_verified"
+                android:background="@drawable/circle_white_background"
+                app:tint="#4CAF50" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Success Status Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                android:backgroundTint="#4CAF50">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="32dp"
+                    android:gravity="center">
+
+                    <!-- Success Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="20dp"
+                        android:padding="12dp"
+                        android:background="#2E7D32">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_verified"
+                            android:layout_marginEnd="6dp"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="BLE 송금 완료"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#C8E6C9" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SUCCESS"
+                            android:textSize="9sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:background="#1B5E20"
+                            android:padding="4dp" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/resultStatusIcon"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:contentDescription="success"
+                        android:src="@drawable/ic_verified"
+                        app:tint="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/resultTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="8dp"
+                        android:text="송금이 성공적으로 완료되었습니다"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#C8E6C9"
+                        android:textAlignment="center" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/resultAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1,000,000"
+                            android:textSize="36sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:fontFamily="sans-serif-medium" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="원"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:layout_marginStart="8dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Transfer Details Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:backgroundTint="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Details Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp"
+                        android:padding="12dp"
+                        android:background="#E8F5E8">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_shield"
+                            android:layout_marginEnd="6dp"
+                            app:tint="#4CAF50" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="송금 내역"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="#2E7D32" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="완료"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:textColor="#4CAF50"
+                            android:background="#E8F5E8"
+                            android:padding="4dp" />
+
+                    </LinearLayout>
+
+                    <!-- From Account -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp"
+                        android:padding="8dp"
+                        android:background="#F8F9FA">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="보낸 계좌"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#424242" />
+
+                        <TextView
+                            android:id="@+id/resultFromAccount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="신한은행 110-123-456789"
+                            android:textSize="13sp"
+                            android:textColor="#212121" />
+
+                    </LinearLayout>
+
+                    <!-- To User -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp"
+                        android:padding="8dp"
+                        android:background="#F8F9FA">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="받는 분"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#424242" />
+
+                        <TextView
+                            android:id="@+id/resultToUser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BLE User"
+                            android:textSize="13sp"
+                            android:textColor="#212121" />
+
+                    </LinearLayout>
+
+                    <!-- Transaction Date -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        android:background="#F8F9FA">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="거래 일시"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#424242" />
+
+                        <TextView
+                            android:id="@+id/resultDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2024-01-15 14:30"
+                            android:textSize="13sp"
+                            android:textColor="#212121" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Enhanced Bottom Action -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="보낸 계좌"
-        android:textSize="16sp"/>
-
-    <TextView
-        android:id="@+id/resultToUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:text="받는 사람"
-        android:textSize="16sp"/>
+        android:layout_marginBottom="16dp">
 
-    <TextView
-        android:id="@+id/resultDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="일시"
-        android:textSize="14sp"/>
+        <Button
+            android:id="@+id/resultDoneButton"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="확인"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@color/primary_color"
+            android:textColor="@color/white"
+            android:elevation="4dp"
+            android:drawableStart="@drawable/ic_verified"
+            android:drawableTint="@color/white"
+            android:drawablePadding="8dp" />
 
-    <Button
-        android:id="@+id/resultDoneButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="확인"/>
+    </LinearLayout>
 
 </LinearLayout>
-
 
