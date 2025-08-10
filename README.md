@@ -1,6 +1,6 @@
 # SOL BLE Transfer System
 
-> **신한은행 쏠(SOL) 내 주변 송금 서비스**  
+> **BLE를 이용한 신한은행 쏠(SOL) 계좌 이체 서비스**  
 > 안드로이드 앱 + 백엔드 서버로 구성된 완전한 BLE 기반 P2P 송금 시스템
 
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
@@ -12,43 +12,100 @@
 
 ```
 SOL-BLE-Transfer/
-├── android/                    # 안드로이드 앱
-│   ├── app/
-│   │   ├── src/main/java/com/shinhan/ble/
-│   │   │   ├── MainActivity.kt
-│   │   │   ├── advertiser/         # BLE Advertiser
-│   │   │   ├── data/              # 데이터 모델 & Repository
-│   │   │   ├── di/                # Hilt 의존성 주입
-│   │   │   └── scanner/           # BLE Scanner
-│   │   └── build.gradle.kts
-│   ├── build.gradle.kts
-│   └── settings.gradle.kts
+├── android/                          # 안드로이드 앱
+│   ├── app/src/main/java/com/shinhan/ble/
+│   │   ├── MainActivity.kt           # 메인 BLE 스캔 화면
+│   │   ├── AccountSelectionActivity.kt # 계좌 선택 화면
+│   │   ├── TransferAmountActivity.kt   # 송금 금액 입력 화면
+│   │   ├── TransferConfirmationActivity.kt # 송금 확인 화면
+│   │   ├── TransferResultActivity.kt   # 송금 결과 화면
+│   │   ├── ProximityVisualizationView.kt # 근거리 사용자 시각화 뷰
+│   │   ├── advertiser/
+│   │   │   └── BleAdvertiser.kt      # BLE 광고 관리
+│   │   ├── scanner/
+│   │   │   ├── BleScanner.kt         # BLE 스캔 인터페이스
+│   │   │   ├── RealBleScanner.kt     # 실제 BLE 스캔 구현
+│   │   │   └── MockBleScanner.kt     # 테스트용 Mock 스캔
+│   │   ├── data/
+│   │   │   ├── ScannedUser.kt        # 스캔된 사용자 모델
+│   │   │   ├── ShinhanBLEData.kt     # BLE 데이터 모델
+│   │   │   ├── ShinhanTransferCode.kt # BLE 송금코드 모델
+│   │   │   ├── network/
+│   │   │   │   ├── api/ShinhanApiService.kt # REST API 인터페이스
+│   │   │   │   ├── dto/ShinhanApiResponse.kt # API 응답 DTO
+│   │   │   │   └── interceptor/      # HTTP 인터셉터
+│   │   │   │       ├── AuthInterceptor.kt
+│   │   │   │       └── ErrorInterceptor.kt
+│   │   │   └── repository/
+│   │   │       ├── ShinhanApiRepository.kt # API 레포지토리
+│   │   │       └── BleTransferRepository.kt # BLE 전송 레포지토리
+│   │   ├── di/
+│   │   │   ├── NetworkModule.kt      # 네트워크 의존성 주입
+│   │   │   └── ScannerModule.kt      # 스캐너 의존성 주입
+│   │   └── utils/
+│   │       ├── DeviceInfoHelper.kt   # 디바이스 정보 유틸
+│   │       └── FirstLaunchHelper.kt  # 첫 실행 처리
+│   ├── app/src/main/res/
+│   │   ├── layout/                   # UI 레이아웃
+│   │   │   ├── activity_main.xml     # 메인 화면
+│   │   │   ├── activity_account_selection.xml
+│   │   │   ├── activity_transfer_amount.xml
+│   │   │   ├── activity_transfer_confirmation.xml
+│   │   │   ├── activity_transfer_result.xml
+│   │   │   ├── item_account.xml      # 계좌 아이템
+│   │   │   ├── item_scanned_user.xml # 스캔된 사용자 아이템
+│   │   │   └── item_device.xml       # 디바이스 아이템
+│   │   ├── drawable/                 # 아이콘 및 그래픽 리소스
+│   │   │   ├── sol_header_gradient.xml
+│   │   │   ├── ic_bluetooth.xml
+│   │   │   ├── ic_security.xml
+│   │   │   ├── ic_shield.xml
+│   │   │   ├── ic_verified.xml
+│   │   │   └── rounded_button.xml
+│   │   └── values/
+│   │       ├── colors.xml            # 앱 색상 정의
+│   │       ├── strings.xml           # 문자열 리소스
+│   │       └── themes.xml            # 앱 테마
+│   └── build.gradle.kts
 │
-├── backend/                    # Spring Boot 백엔드 서버
-│   ├── src/main/kotlin/com/shinhan/ble/
-│   │   ├── BleBackendApplication.kt
-│   │   ├── controller/            # REST API 컨트롤러
-│   │   ├── service/              # 비즈니스 로직
-│   │   ├── entity/               # JPA 엔티티
-│   │   ├── repository/           # 데이터 접근 계층
-│   │   ├── dto/                  # Data Transfer Objects
-│   │   ├── config/               # 설정 클래스
-│   │   └── security/             # 보안 설정
-│   ├── src/main/resources/
-│   │   └── application.yml
-│   ├── build.gradle.kts
-│   └── settings.gradle.kts
+├── backend/                          # Spring Boot 백엔드 서버
+│   └── src/main/kotlin/com/shinhan/ble/
+│       ├── BleBackendApplication.kt  # 메인 애플리케이션
+│       ├── controller/
+│       │   ├── AccountController.kt  # 계좌 관련 API
+│       │   ├── TransferController.kt # 송금 관련 API
+│       │   ├── UserController.kt     # 사용자 관련 API
+│       │   └── DeviceController.kt   # 디바이스 관련 API
+│       ├── service/
+│       │   ├── AccountService.kt     # 계좌 비즈니스 로직
+│       │   ├── TransferService.kt    # 송금 비즈니스 로직
+│       │   ├── UserService.kt        # 사용자 비즈니스 로직
+│       │   ├── DeviceService.kt      # 디바이스 관리
+│       │   └── BleTransferCodeService.kt # BLE 송금코드 서비스
+│       ├── entity/
+│       │   ├── Account.kt            # 계좌 엔티티
+│       │   ├── Transfer.kt           # 송금 엔티티
+│       │   ├── User.kt               # 사용자 엔티티
+│       │   ├── Device.kt             # 디바이스 엔티티
+│       │   └── BleTransferCode.kt    # BLE 송금코드 엔티티
+│       ├── repository/
+│       │   ├── AccountRepository.kt  # 계좌 데이터 접근
+│       │   ├── TransferRepository.kt # 송금 데이터 접근
+│       │   ├── UserRepository.kt     # 사용자 데이터 접근
+│       │   ├── DeviceRepository.kt   # 디바이스 데이터 접근
+│       │   └── BleTransferCodeRepository.kt # BLE 코드 데이터 접근
+│       ├── dto/
+│       │   ├── AccountDto.kt         # 계좌 DTO
+│       │   ├── TransferDto.kt        # 송금 DTO
+│       │   ├── UserDto.kt            # 사용자 DTO
+│       │   ├── DeviceDto.kt          # 디바이스 DTO
+│       │   └── ApiResponse.kt        # 공통 응답 DTO
+│       └── config/
+│           ├── Config.kt             # 기본 설정
+│           ├── SecurityConfig.kt     # 보안 설정
+│           └── DefaultUserConfig.kt  # 기본 사용자 설정
 │
-├── shared/                     # 공통 모델
-│   └── models/
-│       └── ShinhanApiModels.kt  # 공통 데이터 모델
-│
-├── docs/                       # 문서
-│   ├── api-spec.md             # API 명세서
-│   ├── architecture.md         # 아키텍처 문서
-│   └── deployment.md           # 배포 가이드
-│
-└── README.md                   # 이 파일
+└── README.md                         # 이 파일
 ```
 
 ## 🚀 빠른 시작
@@ -69,9 +126,14 @@ cd android
 ./gradlew assembleDebug
 ```
 
-### 3. API 테스트
+### 3. 안드로이드 앱 실행
 
-H2 콘솔: http://localhost:8080/api/v1/h2-console
+Android Studio에서 프로젝트를 열고 실행하거나:
+
+```bash
+cd android
+./gradlew installDebug
+```
 
 ## 🏗️ 시스템 아키텍처
 
@@ -94,69 +156,121 @@ H2 콘솔: http://localhost:8080/api/v1/h2-console
 2. **백엔드 서버** (`backend/`)
    - 사용자 인증 및 계좌 관리
    - BLE 송금코드 생성/검증
-   - 신한은행 코어뱅킹 연동 (Mock)
    - 송금 내역 관리
-
-3. **공통 모델** (`shared/`)
-   - 앱과 서버 간 데이터 모델 통일
-   - API 스펙 정의
 
 ## 🔐 보안 구조
 
 | 계층 | 보안 방식 | 보호 대상 |
 |------|-----------|--------------|
-| **BLE 통신** | AES-128 암호화 | 송금코드 교환 |
-| **HTTP 통신** | TLS 1.3 + JWT | API 통신 |
+| **BLE 통신** | 디바이스 ID 기반 식별 | 사용자 구분 |
+| **HTTP 통신** | REST API | 서버 통신 |
 | **백엔드 서버** | Spring Security | 인증/인가 |
-| **데이터베이스** | JPA + 암호화 | 사용자 데이터 |
+| **데이터베이스** | JPA | 사용자 데이터 |
 
 ## 📱 주요 기능
 
 ### 안드로이드 앱
 - **🔍 BLE 스캔**: Nordic Scanner Library 기반 주변 사용자 발견
+   - 실시간 근거리 사용자 검색 및 시각화
+   - ProximityVisualizationView로 거리별 사용자 표시
 - **📡 BLE 광고**: 내 송금코드 브로드캐스트
-- **💰 송금 플로우**: 스캔 → 선택 → 금액 입력 → 확인
+   - 디바이스 정보와 송금코드 암호화 전송
+- **💰 완전한 송금 플로우**:
+   1. **계좌 선택** - 송금할 계좌 선택 (AccountSelectionActivity)
+   2. **사용자 스캔** - BLE로 주변 사용자 검색 (MainActivity)
+   3. **금액 입력** - 직관적인 숫자패드로 금액 입력 (TransferAmountActivity)
+   4. **송금 확인** - 송금 정보 최종 확인 (TransferConfirmationActivity)
+   5. **결과 확인** - 송금 완료 결과 표시 (TransferResultActivity)
+- **🎨 SOL 브랜드 UI**: 신한은행 SOL 페이 디자인 시스템 적용
 - **🏦 계좌 관리**: 신한은행 계좌 조회 및 잔액 확인
+- **🔒 보안**: 디바이스 ID 기반 사용자 식별
 
 ### 백엔드 서버
-- **🔐 JWT 인증**: 안전한 사용자 인증
-- **📊 계좌 API**: 계좌 목록/상세/잔액 조회
-- **🔄 송금 처리**: 송금코드 검증 및 실제 이체
+- **🔐 사용자 인증**: 기본 사용자 인증 시스템
+- **📊 계좌 관리 API**:
+   - 계좌 목록/상세/잔액 조회
+   - 계좌 유효성 검증
+- **🔄 송금 처리**:
+   - BLE 송금코드 생성/검증
+   - 실제 송금 처리 및 상태 관리
 - **📈 내역 관리**: 송금 내역 조회 및 상태 추적
+- **📱 디바이스 관리**: BLE 디바이스 등록 및 관리
+- **🛡️ 보안**: Spring Security 기반 인증/인가
 
 ## 🛠️ 기술 스택
 
 ### 안드로이드 앱
 - **언어**: Kotlin
 - **아키텍처**: MVVM + Repository Pattern
-- **UI**: Android View System + Material Design
+- **UI**: Android View System + SOL 브랜드 디자인 시스템
+   - CardView 기반 모던 UI
+   - Gradient 헤더 및 브랜딩
+   - Material Design 3.0 컴포넌트
 - **BLE**: Nordic Android Scanner Library
+   - 실시간 스캔 및 광고
+   - Mock/Real 구현체 분리
 - **네트워킹**: Retrofit + OkHttp
-- **DI**: Hilt
-- **로컬 DB**: Room
+   - 인증/에러 인터셉터 구현
+- **DI**: Hilt (Dagger)
+- **시각화**: Custom ProximityVisualizationView
+- **보안**: 디바이스 고유 ID 기반 식별
 
 ### 백엔드 서버
 - **언어**: Kotlin
 - **프레임워크**: Spring Boot 3.2
-- **보안**: Spring Security + JWT
-- **데이터베이스**: PostgreSQL (운영) / H2 (개발)
+- **보안**: Spring Security
+- **데이터베이스**: MySQL
 - **ORM**: JPA + Hibernate
-- **API**: REST + Swagger
+- **API**: REST API with JSON
+- **아키텍처**:
+   - Controller-Service-Repository 패턴
+   - DTO 기반 데이터 전송
+   - 엔티티 기반 도메인 모델
 
 ## 📋 API 명세
 
-주요 엔드포인트:
 
+### 사용자 관리
 ```
-POST /auth/login          # 로그인
-GET  /accounts           # 계좌 목록 조회
-POST /transfer/validate-code  # 송금코드 검증
-POST /transfer/execute   # 송금 실행
-GET  /transfer/history   # 송금 내역
-POST /transfer/generate-code  # 내 송금코드 생성
+GET  /api/v1/users                # 사용자 목록 조회
+POST /api/v1/users                # 사용자 생성
+GET  /api/v1/users/{id}           # 사용자 상세 조회
+PUT  /api/v1/users/{id}           # 사용자 정보 수정
 ```
 
-자세한 API 명세: [docs/api-spec.md](docs/api-spec.md)
+### 계좌 관리
+```
+GET  /api/v1/accounts             # 계좌 목록 조회
+POST /api/v1/accounts             # 계좌 등록
+GET  /api/v1/accounts/{id}        # 계좌 상세 조회
+PUT  /api/v1/accounts/{id}        # 계좌 정보 수정
+GET  /api/v1/accounts/{id}/balance # 계좌 잔액 조회
+```
+
+### 송금 관리
+```
+POST /api/v1/transfers/validate-code # 송금코드 검증
+POST /api/v1/transfers/execute       # 송금 실행
+GET  /api/v1/transfers/history       # 송금 내역 조회
+GET  /api/v1/transfers/{id}          # 송금 상세 조회
+POST /api/v1/transfers/generate-code # 송금코드 생성
+```
+
+### 디바이스 관리
+```
+GET  /api/v1/devices              # 등록된 디바이스 목록
+POST /api/v1/devices              # 디바이스 등록
+PUT  /api/v1/devices/{id}         # 디바이스 정보 수정
+DELETE /api/v1/devices/{id}       # 디바이스 삭제
+```
+
+### BLE 송금코드 관리
+```
+POST /api/v1/ble-codes/generate   # BLE 송금코드 생성
+POST /api/v1/ble-codes/validate   # BLE 송금코드 검증
+GET  /api/v1/ble-codes/{code}     # 송금코드 정보 조회
+PUT  /api/v1/ble-codes/{code}     # 송금코드 상태 업데이트
+```
 
 ## 🔧 개발 환경 설정
 
@@ -164,14 +278,15 @@ POST /transfer/generate-code  # 내 송금코드 생성
 - **JDK**: 17+
 - **Android Studio**: Arctic Fox+
 - **Kotlin**: 1.9+
-- **PostgreSQL**: 13+ (운영 시)
+- **MySQL**: 8.0+
 
 ### 환경 변수
 ```bash
 # 백엔드 서버
 export SPRING_PROFILES_ACTIVE=dev
-export DB_URL=jdbc:postgresql://localhost:5432/shinhan_ble
-export JWT_SECRET=your-jwt-secret-key
+export DB_URL=jdbc:mysql://localhost:3306/shinhan_ble
+export DB_USERNAME=your-username
+export DB_PASSWORD=your-password
 ```
 
 ## 📈 확장 가능성
@@ -180,12 +295,3 @@ export JWT_SECRET=your-jwt-secret-key
 - **QR 코드 지원**: BLE + QR 하이브리드 방식
 - **NFC 연동**: 근거리 결제 확장
 - **해외 송금**: 국제 송금 서비스
-
-## 📄 라이선스
-
-이 프로젝트는 신한은행의 내부 프로젝트로 개발되었습니다.
-
-## 👥 기여자
-
-- **개발**: 신한은행 디지털혁신부
-- **기술 지원**: Claude AI Assistant
